@@ -61,7 +61,7 @@ const Footer: React.FC = () => {
             </li>
             <li className="flex justify-between text-cream/60">
               <span>Sat - Sun:</span>
-              <span>08:00 AM - 12:00 AM</span>
+              <span>08:00 AM - 10:00 PM</span>
             </li>
           </ul>
         </div>
