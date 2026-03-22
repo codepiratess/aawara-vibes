@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ShoppingCart, Menu, X } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { usePathname } from 'next/navigation';
+import gsap from 'gsap';
 
 const Navbar: React.FC = () => {
   const { cartCount } = useCart();
@@ -21,15 +22,19 @@ const Navbar: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-      gsap.fromTo('.mobile-link', 
-        { y: 50, opacity: 0 }, 
-        { y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: 'power4.out', delay: 0.2 }
-      );
-    } else {
-      document.body.style.overflow = 'auto';
-    }
+    const ctx = gsap.context(() => {
+      if (isMobileMenuOpen) {
+        document.body.style.overflow = 'hidden';
+        gsap.fromTo('.mobile-link', 
+          { y: 50, opacity: 0 }, 
+          { y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: 'power4.out', delay: 0.2 }
+        );
+      } else {
+        document.body.style.overflow = 'auto';
+      }
+    });
+
+    return () => ctx.revert();
   }, [isMobileMenuOpen]);
 
   const navLinks = [
